@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoonPrincessInk Library</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>📖 MoonPrincessInk Library</h1>
+    <nav>
+      <button class="nav-btn" onclick="showSection('home')">Home</button>
+      <button class="nav-btn" onclick="showSection('books')">Books</button>
+      <button class="nav-btn" onclick="showSection('about')">About</button>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home Section -->
+    <section id="home" class="active">
+      <h2>Welcome to the Library</h2>
+      <p>Discover fantasy worlds, moonlit romances, and mysterious tales — all by MoonPrincessInk.</p>
+      <button class="magic-btn" onclick="showSection('books')">Explore Books ✨</button>
+    </section>
+
+    <!-- Books Section -->
+    <section id="books">
+      <h2>Featured Books</h2>
+      <div class="book-grid">
+        <div class="book-card">
+          <img src="https://placehold.co/200x300?text=One+Shot+Stories" alt="Book Cover" />
+          <h3>One Shot Stories</h3>
+          <p>A collection of short, emotional, and mysterious tales under the moonlight.</p>
+          <button class="read-btn">Read More</button>
+        </div>
+        <div class="book-card">
+          <img src="https://placehold.co/200x300?text=Lunar+Whispers" alt="Book Cover" />
+          <h3>Lunar Whispers</h3>
+          <p>Soft pastel dreams and broken promises between starlight and shadows.</p>
+          <button class="read-btn">Read More</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <h2>About MoonPrincessInk</h2>
+      <p>MoonPrincessInk is a writer of fantasy and romantic stories, weaving emotions through celestial worlds and moonlit hearts.</p>
+      <p>Follow for upcoming tales and magical updates. 🌙</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 MoonPrincessInk | Designed with 💖 & imagination</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

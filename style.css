@@ -1,0 +1,145 @@
+/* 🌙 General Layout */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s, color 0.5s;
+  background: #f6f5f7;
+  color: #222;
+}
+
+header {
+  background: linear-gradient(90deg, #ffb6c1, #c6a0f6);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  margin-top: 0.5rem;
+}
+
+.nav-btn, .theme-toggle {
+  background: white;
+  color: #444;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover, .theme-toggle:hover {
+  background: #ffd6e0;
+}
+
+/* 🌟 Sections */
+main {
+  padding: 2rem;
+  text-align: center;
+}
+
+section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+section.active {
+  display: block;
+  opacity: 1;
+}
+
+.magic-btn {
+  background: #c6a0f6;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #d4b5ff;
+  transition: transform 0.2s;
+}
+
+.magic-btn:hover {
+  transform: scale(1.05);
+}
+
+/* 📚 Book Cards */
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.book-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 200px;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.book-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.read-btn {
+  margin-top: 0.5rem;
+  background: #ffb6c1;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.read-btn:hover {
+  background: #f58bb0;
+}
+
+/* 🌙 Footer */
+footer {
+  background: #c6a0f6;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* 🌗 Dark Mode */
+.dark {
+  background: #1a1a2e;
+  color: #f6f5f7;
+}
+
+.dark header {
+  background: linear-gradient(90deg, #332d5d, #6a5acd);
+}
+
+.dark .book-card {
+  background: #2a2a4e;
+  color: #ddd;
+}
+
+.dark .magic-btn {
+  background: #6a5acd;
+}
+
+.dark .read-btn {
+  background: #a482ff;
+}
+
+.dark footer {
+  background: #2e245f;
+}
