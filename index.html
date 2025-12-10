@@ -1,61 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MoonPrincessInk Library</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Bin — Colorful Dashboard</title>
+
+  <!-- Bootstrap (for quick layout) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a2e00e6c3c.js" crossorigin="anonymous"></script>
+
+  <!-- Your styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>📖 MoonPrincessInk Library</h1>
-    <nav>
-      <button class="nav-btn" onclick="showSection('home')">Home</button>
-      <button class="nav-btn" onclick="showSection('books')">Books</button>
-      <button class="nav-btn" onclick="showSection('about')">About</button>
-      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    </nav>
-  </header>
 
-  <main>
-    <!-- Home Section -->
-    <section id="home" class="active">
-      <h2>Welcome to the Library</h2>
-      <p>Discover fantasy worlds, moonlit romances, and mysterious tales — all by MoonPrincessInk.</p>
-      <button class="magic-btn" onclick="showSection('books')">Explore Books ✨</button>
-    </section>
+<!-- ==========================
+   AUTH: LOGIN & SIGNUP PAGES
+   ========================== -->
+<main>
+  <section id="authWrap" class="auth-wrap">
 
-    <!-- Books Section -->
-    <section id="books">
-      <h2>Featured Books</h2>
-      <div class="book-grid">
-        <div class="book-card">
-          <img src="https://placehold.co/200x300?text=One+Shot+Stories" alt="Book Cover" />
-          <h3>One Shot Stories</h3>
-          <p>A collection of short, emotional, and mysterious tales under the moonlight.</p>
-          <button class="read-btn">Read More</button>
-        </div>
-        <div class="book-card">
-          <img src="https://placehold.co/200x300?text=Lunar+Whispers" alt="Book Cover" />
-          <h3>Lunar Whispers</h3>
-          <p>Soft pastel dreams and broken promises between starlight and shadows.</p>
-          <button class="read-btn">Read More</button>
+    <!-- LOGIN -->
+    <div id="loginCard" class="card auth-card animate-in">
+      <div class="card-body">
+        <h3 class="card-title text-center">Smart Bin</h3>
+        <p class="text-center muted">Log in to continue</p>
+
+        <input id="loginEmail" class="form-control mb-2" type="email" placeholder="Email" />
+        <input id="loginPass" class="form-control mb-3" type="password" placeholder="Password" />
+
+        <button class="btn btn-primary w-100 mb-2" onclick="login()">Login</button>
+
+        <div class="text-center small muted mb-2">Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></div>
+        <p id="loginMsg" class="muted small"></p>
+      </div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signupCard" class="card auth-card animate-in d-none">
+      <div class="card-body">
+        <h3 class="card-title text-center">Create Account</h3>
+        <p class="text-center muted">Join Smart Bin Organization</p>
+
+        <input id="signupName" class="form-control mb-2" type="text" placeholder="Full name" />
+        <input id="signupEmail" class="form-control mb-2" type="email" placeholder="Email" />
+        <input id="signupPass" class="form-control mb-3" type="password" placeholder="Password" />
+
+        <button class="btn btn-success w-100 mb-2" onclick="signup()">Sign up</button>
+
+        <div class="text-center small muted mb-2">Already registered? <a href="#" onclick="showLogin()">Back to login</a></div>
+        <p id="signupMsg" class="muted small"></p>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ==========================
+       DASHBOARD (hidden initially)
+       ========================== -->
+  <section id="dashboard" class="d-none dashboard-wrap">
+
+    <!-- Top navigation -->
+    <header class="topbar d-flex align-items-center justify-content-between px-4">
+      <div class="left-title">
+        <span class="org-title">Smart Bin Organization</span>
+      </div>
+
+      <div class="center-search">
+        <div class="search-animated">
+          <input id="globalSearch" placeholder="Search bins, users, reports..." />
+          <i class="fa-solid fa-magnifying-glass"></i>
         </div>
       </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about">
-      <h2>About MoonPrincessInk</h2>
-      <p>MoonPrincessInk is a writer of fantasy and romantic stories, weaving emotions through celestial worlds and moonlit hearts.</p>
-      <p>Follow for upcoming tales and magical updates. 🌙</p>
-    </section>
-  </main>
+      <div class="right-menu d-flex align-items-center">
+        <button class="nav-btn">Home</button>
+        <button class="nav-btn">About Us</button>
+        <button class="nav-btn">Contact</button>
+        <button class="nav-btn">Map</button>
 
-  <footer>
-    <p>© 2025 MoonPrincessInk | Designed with 💖 & imagination</p>
-  </footer>
+        <div class="profile-area ms-3">
+          <div id="profileBtn" class="profile-bubble" title="Profile" onclick="toggleSettings()">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <script src="script.js"></script>
+
+    <div class="container-fluid main-grid mt-4">
+      <div class="row g-4">
+
+        <!-- LEFT COLUMN: welcome + bin widget -->
+        <div class="col-lg-4">
+          <div class="welcome-card gradient-glow animate-float">
+            <div class="welcome-top d-flex justify-content-between align-items-start">
+              <div>
+                <h4>Welcome back, <span id="ownerName">User</span> 👋</h4>
+                <p class="muted">Here's the latest from your Smart Bin system</p>
+              </div>
+              <div class="welcome-badge">Dashboard</div>
+            </div>
+
+            <div class="welcome-body mt-3">
+              <div class="bin-status">
+                <h5>Smart Bin Status</h5>
+                <div class="bin-meter">
+                  <div id="fillBar" class="bin-fill">0%</div>
+                </div>
+                <div class="mt-2 d-flex gap-2">
+                  <button class="btn btn-sm btn-light" onclick="simulateAdd(10)">+10L</button>
+                  <button class="btn btn-sm btn-light" onclick="simulateAdd(25)">+25L</button>
+                  <button id="contactBtn" class="btn btn-sm btn-danger ms-auto" onclick="contactCollector()" disabled>Contact Collector</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-card animate-float mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h6>Waste Summary</h6>
+              <small class="muted">Today</small>
+            </div>
+            <div class="stats-grid mt-3">
+              <div class="stat">
+                <div class="stat-value" data-target="128" id="stat1">0</div>
+                <div class="stat-label">Total kg</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-target="42" id="stat2">0</div>
+                <div class="stat-label">Collections</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-target="87" id="stat3">0</div>
+                <div class="stat-label">Recycled %</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- MIDDLE COLUMN: controls + recent -->
+        <div class="col-lg-5">
+
+          <div class="card animate-float p-3">
+            <h5>Add Waste</h5>
+            <div class="row g-2 align-items-end">
+              <div class="col-6">
+                <label class="small muted">Type</label>
+                <select id="wasteType" class="form-select">
+                  <option>Biodegradable</option>
+                  <option>Non-Biodegradable</option>
+                  <option>Recyclable</option>
+                </select>
+              </div>
+              <div class="col-4">
+                <label class="small muted">Amount (liters)</label>
+                <input id="amount" type="number" class="form-control" placeholder="e.g. 10" />
+              </div>
+              <div class="col-2">
+                <button class="btn btn-primary w-100" onclick="addWaste()">Add</button>
+              </div>
+            </div>
+
+            <div id="statusMessage" class="mt-3 muted"></div>
+          </div>
+
+          <div class="card animate-float mt-3 p-3">
+            <h5>Recent Activity</h5>
+            <ul id="activityList" class="activity-list">
+              <!-- JS populates -->
+            </ul>
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT COLUMN: ratings + extra -->
+        <div class="col-lg-3">
+          <div class="card animate-float p-3">
+            <h6>Rating Summary</h6>
+            <div class="rating-avg my-3">
+              <div class="big-rating" id="avgRating">4.7</div>
+              <div class="muted">based on <span id="ratingCount">0</span> reviews</div>
+            </div>
+
+            <div class="rating-bars">
+              <div class="bar-row"><span>5</span><div class="bar"><div class="bar-fill" style="width:70%"></div></div></div>
+              <div class="bar-row"><span>4</span><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+              <div class="bar-row"><span>3</span><div class="bar"><div class="bar-fill" style="width:6%"></div></div></div>
+              <div class="bar-row"><span>2</span><div class="bar"><div class="bar-fill" style="width:3%"></div></div></div>
+              <div class="bar-row"><span>1</span><div class="bar"><div class="bar-fill" style="width:1%"></div></div></div>
+            </div>
+
+            <div class="mt-3">
+              <h6>Leave Review</h6>
+              <select id="rating" class="form-select mb-2">
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="1">⭐</option>
+              </select>
+              <textarea id="comment" class="form-control mb-2" rows="2" placeholder="Write a quick comment..."></textarea>
+              <button class="btn btn-sm btn-success w-100" onclick="addReview()">Submit</button>
+            </div>
+          </div>
+
+          <div class="card animate-float mt-3 p-3">
+            <h6>Quick Links</h6>
+            <div class="d-grid gap-2 mt-2">
+              <button class="btn btn-outline-primary">Reports</button>
+              <button class="btn btn-outline-secondary">Map view</button>
+              <button class="btn btn-outline-success">Collector logs</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</main>
+
+
+<!-- ==========================
+     SETTINGS SLIDE PANEL (profile icon opens)
+     ========================== -->
+<aside id="settingsPanel" class="settings-panel d-none">
+  <section id="settingsRoot" class="page active-page">
+    <h4>Settings</h4>
+
+    <div class="settings-section">
+      <h6>PROFILE & ACCOUNT</h6>
+      <div class="settings-item" data-open="profileAccount">
+        <span>Profile & Account</span><i class="fa-solid fa-angle-right"></i>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h6>PRIVACY & SAFETY</h6>
+      <div class="settings-item" data-open="mutedAccounts">
+        <span>Muted Accounts</span><i class="fa-solid fa-angle-right"></i>
+      </div>
+      <div class="settings-item" data-open="blockedAccounts">
+        <span>Blocked Accounts</span><i class="fa-solid fa-angle-right"></i>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h6>PREFERRED LANGUAGE</h6>
+      <div class="settings-item" data-open="preferredLanguage">
+        <span>Website Language<br><small>English</small></span><i class="fa-solid fa-angle-right"></i>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h6>OTHER</h6>
+      <div class="settings-item" data-open="aboutApp">
+        <span>About Smart Bin Organizations</span><i class="fa-solid fa-angle-right"></i>
+      </div>
+      <div class="settings-item" data-open="helpSupport">
+        <span>Help & Support</span><i class="fa-solid fa-angle-right"></i>
+      </div>
+    </div>
+
+    <button class="logout-btn mt-3" onclick="logout()">Log Out</button>
+  </section>
+
+  <!-- PROFILE ACCOUNT SUBPAGE (your provided content adapted) -->
+  <section id="profileAccount" class="page subpage">
+    <button class="back-btn sub-back" data-target="settingsRoot">←</button>
+    <h4>Profile & Account</h4>
+
+    <div class="about-card">
+      <label>Username</label>
+      <input class="form-input" id="profileUsername" type="text" value="@user" />
+      <label>Full name</label>
+      <input class="form-input" id="profileFullname" type="text" />
+      <label>Student ID</label>
+      <input class="form-input" id="profileStudentID" type="text" />
+      <label>Preferred Gender</label>
+      <select class="form-input" id="profileGender">
+        <option>He</option><option>She</option><option>Prefer not to say</option>
+      </select>
+
+      <h5 class="mt-3">Social accounts</h5>
+      <div class="settings-item social"><span>Connect Facebook</span><button class="small-btn">Connect</button></div>
+      <div class="settings-item social"><span>Connect Google</span><button class="small-btn">Connect</button></div>
+
+      <h5 class="mt-3">ACCOUNT SETTINGS</h5>
+      <p class="muted small">The information you enter here will not be visible to other users.</p>
+
+      <label>Email</label>
+      <input class="form-input" id="profileEmail" type="email" />
+      <label>Password</label>
+      <input class="form-input" id="profilePassword" type="password" />
+      <a class="muted-link" href="#">Forgot password?</a>
+
+      <label>Birthday</label>
+      <input class="form-input" id="profileBirthday" type="date" />
+
+      <button class="danger-btn mt-2" onclick="deleteAccount()">Delete account</button>
+    </div>
+  </section>
+
+  <section id="mutedAccounts" class="page subpage">
+    <button class="back-btn sub-back" data-target="settingsRoot">←</button>
+    <h4>Muted Accounts</h4>
+    <p id="mutedListNote">You aren't muting anyone.</p>
+  </section>
+
+  <section id="blockedAccounts" class="page subpage">
+    <button class="back-btn sub-back" data-target="settingsRoot">←</button>
+    <h4>Blocked Accounts</h4>
+    <p id="blockedListNote">You didn't block any account.</p>
+  </section>
+
+  <section id="preferredLanguage" class="page subpage">
+    <button class="back-btn sub-back" data-target="settingsRoot">←</button>
+    <h4>Preferred Language of Website</h4>
+    <label><input type="radio" name="lang" value="English" checked> English</label><br>
+    <label><input type="radio" name="lang" value="Tagalog"> Tagalog</label><br>
+    <label><input type="radio" name="lang" value="Bisaya"> Bisaya</label>
+  </section>
+
+  <section id="aboutApp" class="page subpage">
+    <button class="back-btn sub-back" data-target="settingsRoot">←</button>
+    <h4>About Smart Bin Organizations</h4>
+    <div class="about-card">
+      <p><strong>Book Borrowing</strong></p>
+      <p>@2025 Smart Bin Organizations</p>
+      <p>Smart Bin Organizations is all about a website who can detect a full bins around the campus and it can contact the garbage collector.</p>
+    </div>
+  </section>
+
+  <section id="helpSupport" class="page subpage">
+    <button class="back-btn sub-back" data-target="settingsRoot">←</button>
+    <h4>Help & Support</h4>
+    <div class="about-card">
+      <p>What do you need help with?</p>
+      <button id="contactUsBtn" class="small-btn">Contact us here</button>
+    </div>
+  </section>
+</aside>
+
+
+<script src="script.js"></script>
 </body>
 </html>
